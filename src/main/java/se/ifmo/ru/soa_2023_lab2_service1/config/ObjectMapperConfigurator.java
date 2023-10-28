@@ -8,7 +8,6 @@ import jakarta.enterprise.inject.Produces;
 public class ObjectMapperConfigurator {
     @Produces
     public ObjectMapper createObjectMapper(){
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper;
+        return new ObjectMapper();
     }
 }
