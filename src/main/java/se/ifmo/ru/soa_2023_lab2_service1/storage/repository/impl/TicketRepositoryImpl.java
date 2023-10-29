@@ -175,7 +175,7 @@ public class TicketRepositoryImpl implements TicketRepository {
     }
 
     @Override
-    public long countTicketByPrice(int price) {
+    public long countTicketByPrice(float price) {
         return (long) entityManager.createQuery("select count(f) from TicketEntity f where f.price=:price")
                 .setParameter("price", price).getSingleResult();
     }

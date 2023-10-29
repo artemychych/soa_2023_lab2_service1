@@ -17,7 +17,7 @@ public interface TicketRepository {
 
     TicketEntity getMinimumType();
 
-    long countTicketByPrice(int price);
+    long countTicketByPrice(float price);
 
     List<TicketEntity> getTicketGreaterType(String ticketType);
 
