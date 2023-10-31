@@ -40,7 +40,7 @@ public class TicketEntity {
     private java.time.LocalDate creationDate;
     @Column(name = "price")
     private Float price;
-    @Column(name = "ticket_type")
+    @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private TicketType type;
     @Column(name = "person_id")

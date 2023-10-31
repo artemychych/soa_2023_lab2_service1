@@ -50,10 +50,14 @@ public interface TicketMapper {
     List<Ticket> fromEntityList(List<TicketEntity> entities);
 
     default String fromTicketType(TicketType type) {
+
         return type.toString();
     }
 
     default String fromHairColor(Color color) {
+        if (color == null) {
+            return Color.NONE.toString();
+        }
         return color.toString();
     }
 

@@ -1,5 +1,6 @@
 package se.ifmo.ru.soa_2023_lab2_service1.service.impl;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+@ApplicationScoped
 public class TicketServiceImpl implements TicketService {
     @Inject
     TicketRepositoryImpl ticketDao;

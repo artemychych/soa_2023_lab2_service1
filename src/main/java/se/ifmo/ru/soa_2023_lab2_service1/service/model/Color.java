@@ -11,8 +11,8 @@ public enum Color {
     GREEN("green"),
     ORANGE("orange"),
     WHITE("white"),
-    BROWN("brown");
-
+    BROWN("brown"),
+    NONE("none");
     @Getter
     private final String value;
 
@@ -25,6 +25,6 @@ public enum Color {
         return Arrays.stream(Color.values())
                 .filter(e-> Objects.equals(e.getValue(), value))
                 .findFirst()
-                .orElse(WHITE);
+                .orElse(NONE);
     }
 }

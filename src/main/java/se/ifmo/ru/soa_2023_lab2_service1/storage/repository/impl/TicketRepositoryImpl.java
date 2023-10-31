@@ -21,12 +21,17 @@ import java.util.Objects;
 @ApplicationScoped
 public class TicketRepositoryImpl implements TicketRepository {
 
-    @PersistenceContext(unitName = "postgres", type = PersistenceContextType.EXTENDED)
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Override
     public TicketEntity findById(int id){
-        return entityManager.find(TicketEntity.class, id);
+        EntityManagerFactory entityManagerFactory = Persistence
+                .createEntityManagerFactory("default");
+        EntityManager entityManagerLocal = entityManagerFactory.createEntityManager();
+
+
+        return entityManagerLocal.find(TicketEntity.class, id);
     }
 
     @Override

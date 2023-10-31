@@ -1,6 +1,7 @@
 package se.ifmo.ru.soa_2023_lab2_service1.web.error_mappers;
 
 import jakarta.inject.Inject;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;

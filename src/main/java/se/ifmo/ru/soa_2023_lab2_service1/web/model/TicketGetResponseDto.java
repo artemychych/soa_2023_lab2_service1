@@ -8,8 +8,8 @@ import se.ifmo.ru.soa_2023_lab2_service1.service.model.Color;
 import se.ifmo.ru.soa_2023_lab2_service1.service.model.Location;
 import se.ifmo.ru.soa_2023_lab2_service1.service.model.TicketType;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
 
 @Data
 @Builder
