@@ -6,6 +6,8 @@ import jakarta.persistence.criteria.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
+import se.ifmo.ru.soa_2023_lab2_service1.service.model.Ticket;
+import se.ifmo.ru.soa_2023_lab2_service1.service.model.TicketType;
 import se.ifmo.ru.soa_2023_lab2_service1.storage.model.Filter;
 import se.ifmo.ru.soa_2023_lab2_service1.storage.model.Page;
 import se.ifmo.ru.soa_2023_lab2_service1.storage.model.Sort;
@@ -164,17 +166,17 @@ public class TicketRepositoryImpl implements TicketRepository {
     @Override
     public TicketEntity getMinimumType(){
         if ((long) entityManager.createQuery("select count(f) from TicketEntity f where f.type=:type")
-                .setParameter("type", "cheap").getSingleResult() != 0) {
+                .setParameter("type", TicketType.CHEAP).getSingleResult() != 0) {
             return (TicketEntity) entityManager.createQuery("select f from TicketEntity f where f.type=:type")
-                    .setParameter("type", "cheap").setMaxResults(1).getSingleResult();
+                    .setParameter("type", TicketType.CHEAP).setMaxResults(1).getSingleResult();
         } else if ((long) entityManager.createQuery("select count(f) from TicketEntity f where f.type=:type")
-                .setParameter("type", "budgetary").getSingleResult() != 0) {
+                .setParameter("type", TicketType.BUDGETARY).getSingleResult() != 0) {
             return (TicketEntity) entityManager.createQuery("select f from TicketEntity f where f.type=:type")
-                    .setParameter("type", "budgetary").setMaxResults(1).getSingleResult();
+                    .setParameter("type", TicketType.BUDGETARY).setMaxResults(1).getSingleResult();
         } else if ((long) entityManager.createQuery("select count(f) from TicketEntity f where f.type=:type")
-                .setParameter("type", "vip").getSingleResult() != 0) {
+                .setParameter("type", TicketType.VIP).getSingleResult() != 0) {
             return (TicketEntity) entityManager.createQuery("select f from TicketEntity f where f.type=:type")
-                    .setParameter("type", "vip").setMaxResults(1).getSingleResult();
+                    .setParameter("type", TicketType.VIP).setMaxResults(1).getSingleResult();
         }
         return null;
     }
@@ -188,10 +190,10 @@ public class TicketRepositoryImpl implements TicketRepository {
     public List<TicketEntity> getTicketGreaterType(String ticketType){
         if (Objects.equals(ticketType, "cheap")) {
             return entityManager.createQuery("select f from TicketEntity f where f.type=:type_one or f.type=:type_two", TicketEntity.class)
-                    .setParameter("type_one", "budgetary").setParameter("type_two", "vip").getResultList();
+                    .setParameter("type_one", TicketType.BUDGETARY).setParameter("type_two", TicketType.VIP).getResultList();
         } else if (Objects.equals(ticketType, "budgetary")) {
             return entityManager.createQuery("select f from TicketEntity f where f.type=:type_one", TicketEntity.class)
-                    .setParameter("type_one", "vip").getResultList();
+                    .setParameter("type_one", TicketType.VIP).getResultList();
         } else if (Objects.equals(ticketType, "vip")){
             return null;
         }

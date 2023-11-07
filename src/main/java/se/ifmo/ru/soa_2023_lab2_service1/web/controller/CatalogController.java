@@ -12,6 +12,8 @@ import se.ifmo.ru.soa_2023_lab2_service1.service.api.TicketService;
 import se.ifmo.ru.soa_2023_lab2_service1.service.model.Ticket;
 import se.ifmo.ru.soa_2023_lab2_service1.storage.model.Page;
 import se.ifmo.ru.soa_2023_lab2_service1.util.ResponseUtils;
+import se.ifmo.ru.soa_2023_lab2_service1.web.model.CountByPriceResponseDto;
+import se.ifmo.ru.soa_2023_lab2_service1.web.model.TicketAddOrUpdateRequestDto;
 import se.ifmo.ru.soa_2023_lab2_service1.web.model.TicketsListGetResponseDto;
 
 import java.util.ArrayList;
@@ -98,7 +100,7 @@ public class CatalogController {
 
 
     @GET
-    @Path("ticket/{id}")
+    @Path("/tickets/{id}")
     public Response getTicket(@PathParam("id") int id) {
         Ticket ticket = ticketService.getTicket(id);
         if (ticket == null) {
@@ -110,7 +112,132 @@ public class CatalogController {
     }
 
 
+    @POST
+    @Path("/tickets")
+    public Response addTicket(TicketAddOrUpdateRequestDto requestDto) {
+        Response validationResult = validateTicketAddOrUpdateRequestDto(requestDto);
 
+        if (validationResult != null) {
+            return validationResult;
+        }
+
+        Ticket ticket = ticketService.addTicket(requestDto);
+
+        return Response.ok().entity(ticketMapper.toDto(ticket)).build();
+    }
+
+    @PUT
+    @Path("/tickets/{id}")
+    public Response updateFlat(@PathParam("id") int id, TicketAddOrUpdateRequestDto requestDto) {
+        Response validationResult = validateTicketAddOrUpdateRequestDto(requestDto);
+
+        if (validationResult != null) {
+            return validationResult;
+        }
+
+        Ticket ticket = ticketService.updateTicket(id, requestDto);
+
+        if (ticket == null) {
+            return responseUtils.buildResponseWithMessage(Response.Status.NOT_FOUND, "Flat with id " + id + " not found");
+        }
+        return Response
+                .ok()
+                .entity(ticketMapper.toDto(ticket))
+                .build();
+    }
+
+    @DELETE
+    @Path("/tickets/{id}")
+    public Response deleteFlat(@PathParam("id") int id) {
+        boolean deleted = ticketService.deleteTicket(id);
+
+        if (!deleted) {
+            return responseUtils.buildResponseWithMessage(Response.Status.NOT_FOUND, "Flat with id " + id + " not found");
+        }
+
+        return Response.noContent().build();
+    }
+
+    @GET
+    @Path("/tickets/minimum-type")
+    public Response getMinimumType() {
+        Ticket ticket = ticketService.getMinimumTypeTicket();
+        if (ticket == null) {
+            return responseUtils.buildResponseWithMessage(Response.Status.NOT_FOUND,
+                    "Ticket not found!");
+        }
+
+        return Response
+                .ok()
+                .entity(ticketMapper.toDto(ticket))
+                .build();
+    }
+
+    @GET
+    @Path("/tickets/name/{type}")
+    public Response getGreaterType(@PathParam("type") String type) {
+        List<Ticket> tickets = ticketService.getTicketsGreaterType(type);
+
+        if (tickets == null) {
+            return responseUtils.buildResponseWithMessage(Response.Status.NOT_FOUND,
+                    "Tickets not found!");
+        }
+
+
+        return Response
+                .ok()
+                .entity(new TicketsListGetResponseDto(
+                        ticketMapper.toGetResponseDtoList(tickets),
+                        0,
+                        20,
+                        40,
+                        30L
+                ))
+                .build();
+    }
+
+    @GET
+    @Path("/tickets/count/{price}")
+    public Response getCountByPrice(@PathParam("price") long price) {
+        return Response.ok().entity(CountByPriceResponseDto.builder().count(ticketService.countTicketsByPrice(price)).build())
+                .build();
+    }
+
+
+    private Response validateTicketAddOrUpdateRequestDto(TicketAddOrUpdateRequestDto requestDto) {
+        if (StringUtils.isEmpty(requestDto.getName())) {
+            return responseUtils.buildResponseWithMessage(Response.Status.BAD_REQUEST, "Name can not be empty");
+        }
+        if (requestDto.getCoordinates() == null) {
+            return responseUtils.buildResponseWithMessage(Response.Status.BAD_REQUEST, "Coordinates cannot be null");
+        }
+        if (requestDto.getPrice() == null || requestDto.getPrice() <= 0) {
+            return responseUtils.buildResponseWithMessage(Response.Status.BAD_REQUEST, "Price must be grater than 0");
+        }
+        if (requestDto.getType() == null) {
+            return responseUtils.buildResponseWithMessage(Response.Status.BAD_REQUEST, "Type cannot be null");
+        }
+        if (requestDto.getPerson() != null) {
+            if (requestDto.getPerson().getWeight() != null && requestDto.getPerson().getWeight() <= 0) {
+                return responseUtils.buildResponseWithMessage(Response.Status.BAD_REQUEST, "Weight of Person must be greater than 0");
+            }
+            if (requestDto.getPerson().getHairColor() == null) {
+                return responseUtils.buildResponseWithMessage(Response.Status.BAD_REQUEST, "Hair color of Person cannot be null");
+            }
+
+            if (requestDto.getPerson().getLocation() == null) {
+                return responseUtils.buildResponseWithMessage(Response.Status.BAD_REQUEST, "Location of Person cannot be null");
+            } else {
+                if (requestDto.getPerson().getLocation().getX() == null && requestDto.getPerson().getId() != 0) {
+                    return responseUtils.buildResponseWithMessage(Response.Status.BAD_REQUEST, "X Location of Person cannot be null");
+                }
+            }
+
+
+        }
+
+        return null;
+    }
 
 
 }

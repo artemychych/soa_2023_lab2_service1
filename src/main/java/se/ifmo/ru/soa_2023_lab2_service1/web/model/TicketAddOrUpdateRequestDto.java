@@ -37,7 +37,7 @@ public class TicketAddOrUpdateRequestDto {
 
     @Data
     @XmlType
-    @XmlRootElement(name = "person")
+    @XmlRootElement(name = "location")
     public static class TicketPersonLocationAddResponseDto {
         private Float x; //Поле не может быть null
         private long y;
