@@ -33,7 +33,6 @@ public interface TicketMapper {
         ticket.price(entity.getPrice());
         ticket.type(entity.getType());
         ticket.person(Person.builder()
-                        .id(entity.getPersonId())
                         .weight(entity.getPersonWeight())
                         .hairColor(entity.getPersonHairColor())
                         .location(

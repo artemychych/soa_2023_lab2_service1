@@ -6,7 +6,6 @@ create table ticket (
                       creation_date timestamp without time zone,
                       price double precision,
                       type character varying(255) not null,
-                      person_id bigint,
                       person_weight bigint,
                       person_hair_color character varying(255),
                       person_location_x double precision,

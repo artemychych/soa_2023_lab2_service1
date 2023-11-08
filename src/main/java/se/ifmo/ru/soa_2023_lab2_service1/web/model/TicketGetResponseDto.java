@@ -41,7 +41,6 @@ public class TicketGetResponseDto {
     @XmlType
     @XmlRootElement(name = "Person")
     public static class TicketPersonGetResponseDto {
-        private long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
         private Long weight; //Поле может быть null, Значение поля должно быть больше 0
         private String hairColor; //Поле не может быть null
         private TicketPersonLocationGetResponseDto location; //Поле не может быть null

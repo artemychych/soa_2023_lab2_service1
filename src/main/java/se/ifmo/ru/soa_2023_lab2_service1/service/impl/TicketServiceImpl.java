@@ -150,7 +150,6 @@ public class TicketServiceImpl implements TicketService {
         ticketEntity.setCoordinatesY(requestDto.getCoordinates().getY());
         ticketEntity.setPrice(requestDto.getPrice());
         ticketEntity.setType(TicketType.fromValue(requestDto.getType()));
-        ticketEntity.setPersonId(requestDto.getPerson().getId());
         ticketEntity.setPersonWeight(requestDto.getPerson().getWeight());
         ticketEntity.setPersonHairColor(Color.fromValue(requestDto.getPerson().getHairColor()));
         ticketEntity.setPersonLocationX(requestDto.getPerson().getLocation().getX());
@@ -169,7 +168,6 @@ public class TicketServiceImpl implements TicketService {
                 .coordinatesY(requestDto.getCoordinates().getY())
                 .price(requestDto.getPrice())
                 .type(TicketType.fromValue(requestDto.getType()))
-                .personId(requestDto.getPerson().getId())
                 .personWeight(requestDto.getPerson().getWeight())
                 .personHairColor(Color.fromValue(requestDto.getPerson().getHairColor()))
                 .personLocationX(requestDto.getPerson().getLocation().getX())

@@ -43,8 +43,6 @@ public class TicketEntity {
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private TicketType type;
-    @Column(name = "person_id")
-    private long personId;
     @Column(name = "person_weight")
     private Long personWeight;
     @Column(name = "person_hair_color")

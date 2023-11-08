@@ -228,7 +228,7 @@ public class CatalogController {
             if (requestDto.getPerson().getLocation() == null) {
                 return responseUtils.buildResponseWithMessage(Response.Status.BAD_REQUEST, "Location of Person cannot be null");
             } else {
-                if (requestDto.getPerson().getLocation().getX() == null && requestDto.getPerson().getId() != 0) {
+                if (requestDto.getPerson().getLocation().getX() == null && requestDto.getPerson().getWeight() != null) {
                     return responseUtils.buildResponseWithMessage(Response.Status.BAD_REQUEST, "X Location of Person cannot be null");
                 }
             }

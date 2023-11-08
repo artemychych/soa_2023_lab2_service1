@@ -29,7 +29,6 @@ public class TicketAddOrUpdateRequestDto {
     @XmlType
     @XmlRootElement(name = "person")
     public static class TicketPersonAddResponseDto {
-        private long id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
         private Long weight; //Поле может быть null, Значение поля должно быть больше 0
         private String hairColor; //Поле не может быть null
         private TicketGetResponseDto.TicketPersonLocationGetResponseDto location; //Поле не может быть null
